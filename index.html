@@ -31,11 +31,39 @@
     <span class="col-md-3 card mb-1" id="connected-viewers"></span>
 
     <div class="row">
-       <div class="col-md-12">
-       </div>
-      <div class="col-md-12">
 
-        <div class="card mb-4">
+        <div class="col-md-4">
+          <div class="card">
+            <h3 class="card-header">Calculator</h3>
+  
+            <div class="card-body">
+              <button id="button-1" class="btn btn-primary number" value="1"><h1>1</h1></button>
+              <button id="button-2" class="btn btn-primary number" value="2"><h1>2</h1></button>
+              <button id="button-3" class="btn btn-primary number" value="3"><h1>3</h1></button>
+              <button id="button-plus" class="btn btn-danger operator" value="plus"><h1>+</h1></button>
+              <br><br>
+              <button id="button-4" class="btn btn-primary number" value="4"><h1>4</h1></button>
+              <button id="button-5" class="btn btn-primary number" value="5"><h1>5</h1></button>
+              <button id="button-6" class="btn btn-primary number" value="6"><h1>6</h1></button>
+              <button id="button-minus" class="btn btn-danger operator" value="minus"><h1>&minus;</h1></button>
+              <br><br>
+              <button id="button-7" class="btn btn-primary number" value="7"><h1>7</h1></button>
+              <button id="button-8" class="btn btn-primary number" value="8"><h1>8</h1></button>
+              <button id="button-9" class="btn btn-primary number" value="9"><h1>9</h1></button>
+              <button id="button-multiply" class="btn btn-danger operator" value="times"><h1>&times;</h1></button>
+              <br><br>
+              <button id="button-0" class="btn btn-primary number" value="0"><h1>0</h1></button>
+              <button id="button-divide" class="btn btn-danger operator" value="divide"><h1>&divide;</h1></button>
+              <button id="button-power" class="btn btn-danger operator" value="power"><h1>^</h1></button>
+              <button id="button-equal" class="btn btn-success equal" value="equals"><h1>=</h1></button>
+              <br><br>
+              <button id="button-clear" class="btn btn-dark clear" value="clear"><h1>clear</h1></button>
+            </div>
+          </div>
+        </div>
+  
+        <div class="col-md-8">
+        <div class="card w-auto p-3">
           <div class="card-body">
             
             <table class="table table-sm table-hover" id='calculator-table'>
@@ -52,66 +80,39 @@
             </table>
           </div>
         </div>
-      </div>
-    </div>
 
-    <!-- BEGIN NEW Calculator -->
 
-    <div class="container">
+        <div class="row">
 
-    <div class="row">
-
-      <!-- Calculator Card -->
-      <div class="col-lg-4">
-        <div class="card">
-          <h3 class="card-header">Calculator</h3>
-
-          <div class="card-body">
-            <button id="button-1" class="btn btn-primary number" value="1"><h1>1</h1></button>
-            <button id="button-2" class="btn btn-primary number" value="2"><h1>2</h1></button>
-            <button id="button-3" class="btn btn-primary number" value="3"><h1>3</h1></button>
-            <button id="button-plus" class="btn btn-danger operator" value="plus"><h1>+</h1></button>
-            <br><br>
-            <button id="button-4" class="btn btn-primary number" value="4"><h1>4</h1></button>
-            <button id="button-5" class="btn btn-primary number" value="5"><h1>5</h1></button>
-            <button id="button-6" class="btn btn-primary number" value="6"><h1>6</h1></button>
-            <button id="button-minus" class="btn btn-danger operator" value="minus"><h1>&minus;</h1></button>
-            <br><br>
-            <button id="button-7" class="btn btn-primary number" value="7"><h1>7</h1></button>
-            <button id="button-8" class="btn btn-primary number" value="8"><h1>8</h1></button>
-            <button id="button-9" class="btn btn-primary number" value="9"><h1>9</h1></button>
-            <button id="button-multiply" class="btn btn-danger operator" value="times"><h1>&times;</h1></button>
-            <br><br>
-            <button id="button-0" class="btn btn-primary number" value="0"><h1>0</h1></button>
-            <button id="button-divide" class="btn btn-danger operator" value="divide"><h1>&divide;</h1></button>
-            <button id="button-power" class="btn btn-danger operator" value="power"><h1>^</h1></button>
-            <button id="button-equal" class="btn btn-success equal" value="equals"><h1>=</h1></button>
-            <br><br>
-            <button id="button-clear" class="btn btn-dark clear" value="clear"><h1>clear</h1></button>
+          <!-- Calculator Card -->
+          <!-- Result Card -->
+          <div class="col-md-6">
+            <div class="card">
+              <h3 class="card-header">Result</h3>
+              <div class="card-body">
+                <h3 id="first-number"></h3>
+                <h3 id="operator"></h3>
+                <h3 id="second-number"></h3>
+                <hr>
+                <!-- <h3>=</h3> -->
+                <h3 id="result"></h3>
+              </div>
+            </div>
           </div>
         </div>
+
+
       </div>
 
-      <!-- Result Card -->
-      <div class="col-lg-6">
-        <div class="card">
-          <h3 class="card-header">Result</h3>
-          <div class="card-body">
-            <h1 id="first-number"></h1>
-            <h1 id="operator"></h1>
-            <h1 id="second-number"></h1>
-            <hr>
-            <h1 id="result"></h1>
-          </div>
-        </div>
-      </div>
     </div>
+
+
   </div>
 
   <!-- END NEW Calculator -->
 
 
-
+  <div class="container">
 
   </div>
   <script src="./src/index.js"></script>
