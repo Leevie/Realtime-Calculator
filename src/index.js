@@ -17,40 +17,26 @@ var database = firebase.database();
 // BEGIN - Shows connected users...
 
 
-// connectionsRef references a specific location in our database.
-// All of our connections will be stored in this directory.
 var connectionsRef = database.ref("/connections");
 
-// '.info/connected' is a special location provided by Firebase that is updated
-// every time the client's connection state changes.
-// '.info/connected' is a boolean value, true if the client is connected and false if they are not.
 var connectedRef = database.ref(".info/connected");
 
-// When the client's connection state changes...
 connectedRef.on("value", function(snap) {
 
-  // If they are connected..
   if (snap.val()) {
 
-    // Add user to the connections list.
     var con = connectionsRef.push(true);
-    // Remove user from the connection list when they disconnect.
     con.onDisconnect().remove();
   }
 });
 
-// When first loaded or when the connections list changes...
 connectionsRef.on("value", function(snap) {
 
-  // Display the viewer count in the html.
-  // The number of online users is the number of children in the connections list.
   $("#connected-viewers").text("Users Connected: "+ snap.numChildren());
 });
 
 // END - Shows connected users...
 // ------------------------------------
-
-
 
 
 // Global Variables
@@ -80,12 +66,10 @@ function initializeCalculator() {
 
 $(".number").on("click", function() {
 
-  // Check if we've already run a calculation, if so... we'll just.
   if (isCalculated) {
     return false;
   }
 
-  // If operator is chosen, we should be writing the secondNumber, otherwise, the firstNumber
   if (isOperatorChosen) {
     secondDigit += $(this).val();
     $("#second-number").text(secondDigit);
@@ -103,19 +87,14 @@ $(".number").on("click", function() {
 // BEGIN Operator Click Function
 
 $(".operator").on("click", function() {
-  // Check if a first number has already been selected
-  // Or we've already run a calculation, if so we just exit.
   if (!firstDigit || isCalculated) {
     return false;
   }
 
-  // Set isOperatorChosen to true so we start writing to secondNumber
   isOperatorChosen = true;
 
-  // Store off the operator
   operator = $(this).val();
 
-  // Set the HTML of the #operator to the text of what was clicked
   $("#operator").text($(this).text());
 });
 
@@ -124,15 +103,12 @@ $(".operator").on("click", function() {
 // BEGIN Equal Click Function
 
 $(".equal").on("click", function() {
-  // If we already clicked equal, don't do the calculation again
   if (isCalculated) {
     return false;
   }
 
-  // Set isCalculated to true so that we don't get in a weird UI state by clicking buttons again
   isCalculated = true;
 
-  // Use parseInt to convert our string representation of numbers into actual integers
   firstDigit = parseInt(firstDigit);
   secondDigit = parseInt(secondDigit);
 
@@ -211,7 +187,6 @@ database.ref().limitToLast(10).on("child_added", function(childSnapshot) {
   console.log(secondDigit);
   console.log(operator);
 
-  // Create the new row
   var newRow = $("<tr>").append(
     $("<td>").text(firstDigit),
     $("<td>").text(operator),
@@ -219,9 +194,7 @@ database.ref().limitToLast(10).on("child_added", function(childSnapshot) {
     $("<td>").text(total)
   );
 
-  // Append the new row to the table
   $("#calculator-table > tbody").append(newRow);
-  // initializeCalculator();
   
   setTimeout(function(){initializeCalculator(); }, 1000);
 
