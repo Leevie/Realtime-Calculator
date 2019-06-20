@@ -1,12 +1,3 @@
-// var config = {
-//       apiKey: "AIzaSyBfyrrmUqygTJxX-TNfAAbGOpZRcbr19uY",
-//       authDomain: "recent-user-with-set-chris.firebaseapp.com",
-//       databaseURL: "https://recent-user-with-set-chris.firebaseio.com",
-//       projectId: "recent-user-with-set-chris",
-//       storageBucket: "recent-user-with-set-chris.appspot.com",
-//       messagingSenderId: "771666105922"
-// };
-
 
 const firebaseConfig = {
   apiKey: "AIzaSyBYRtaYDn129iRZH8Ejbk-vZUUCq-vzhtg",
@@ -62,18 +53,134 @@ connectionsRef.on("value", function(snap) {
 
 
 
-$("#button-equal").on("click", function(event) {
-  event.preventDefault();
+// Global Variables
 
-  var firstDigit = parseInt($("#firstDigit").val().trim());
-  var secondDigit = parseInt($("#secondDigit").val().trim());
-  var operator = $("#operator").val().trim();
-  var total;
+let firstDigit = "";
+let secondDigit = "";
+let operator = "";
+let total = "";
+let isOperatorChosen = false;
+let isCalculated = false;
 
-  if (operator=='+'){
-    total = firstDigit + secondDigit;
+// BEGIN Clears Calculator
+
+function initializeCalculator() {
+  firstDigit = "";
+  secondDigit = "";
+  operator = "";
+  isOperatorChosen = false;
+  isCalculated = false;
+
+  $("#first-number, #second-number, #operator, #result").empty();
+}
+
+// END Clears Calculator
+
+// BEGIN Number Click Function
+
+$(".number").on("click", function() {
+
+  // Check if we've already run a calculation, if so... we'll just.
+  if (isCalculated) {
+    return false;
   }
 
+  // If operator is chosen, we should be writing the secondNumber, otherwise, the firstNumber
+  if (isOperatorChosen) {
+    secondDigit += $(this).val();
+    $("#second-number").text(secondDigit);
+
+  }
+  else {
+    firstDigit += $(this).val();
+    $("#first-number").text(firstDigit);
+  }
+
+});
+
+// END Number Click Function
+
+// BEGIN Operator Click Function
+
+$(".operator").on("click", function() {
+  // Check if a first number has already been selected
+  // Or we've already run a calculation, if so we just exit.
+  if (!firstDigit || isCalculated) {
+    return false;
+  }
+
+  // Set isOperatorChosen to true so we start writing to secondNumber
+  isOperatorChosen = true;
+
+  // Store off the operator
+  operator = $(this).val();
+
+  // Set the HTML of the #operator to the text of what was clicked
+  $("#operator").text($(this).text());
+});
+
+// END Operator Click Function
+
+// BEGIN Equal Click Function
+
+$(".equal").on("click", function() {
+  // If we already clicked equal, don't do the calculation again
+  if (isCalculated) {
+    return false;
+  }
+
+  // Set isCalculated to true so that we don't get in a weird UI state by clicking buttons again
+  isCalculated = true;
+
+  // Use parseInt to convert our string representation of numbers into actual integers
+  firstDigit = parseInt(firstDigit);
+  secondDigit = parseInt(secondDigit);
+
+  // Based on the operator that was chosen.
+  // Then run the operation and set the HTML of the result of that operation
+  if (operator === "plus") {
+    total = firstDigit + secondDigit;
+  } else if (operator === "minus") {
+    total = firstDigit - secondDigit;
+  } else if (operator === "times") {
+    total = firstDigit * secondDigit;
+  } else if (operator === "divide") {
+    total = firstDigit / secondDigit;
+  } else if (operator === "power") {
+    total = Math.pow(firstDigit, secondDigit);
+  }
+
+  $("#result").text("= "+ total);
+});
+
+$(".clear").on("click", function() {
+  // Call initializeCalculater so we can reset the state of our app
+  initializeCalculator();
+});
+
+//  END Equal Click Function
+
+$("#button-equal").on("click", function(event) {
+  event.preventDefault();
+  // firstDigit = parseInt($("#first-number").val());
+  // secondDigit = parseInt($("#second-number").val());
+  firstDigit = parseInt(firstDigit);
+  secondDigit = parseInt(secondDigit);
+  // operator = $(".operator").val();
+
+  
+  // Switch statement for operators
+  switch($(".operator").val()) {
+    case "plus":
+      operator = "+";
+      break;
+    case "minus":
+      operator = "-";
+      break;
+        
+      }
+      
+      console.log("This is the Operator: "+ operator)
 
   var newCalc = {
     firstDigit: firstDigit,
@@ -82,10 +189,7 @@ $("#button-equal").on("click", function(event) {
     total: total
   };
 
-
   database.ref().push(newCalc);
-
-
 
   console.log(newCalc.firstDigit);
   console.log(newCalc.secondDigit);
@@ -100,24 +204,17 @@ $("#button-equal").on("click", function(event) {
   // $("#total").val("");
 });
 
-
-
-
 database.ref().on("child_added", function(childSnapshot) {
-  console.log(childSnapshot.val());
-
+  console.log("This is childSnapshot here: " + childSnapshot.val());
 
   var firstDigit = childSnapshot.val().firstDigit;
   var secondDigit = childSnapshot.val().secondDigit;
   var operator = childSnapshot.val().operator;
   var total = childSnapshot.val().total;
 
-
-
   console.log(firstDigit);
   console.log(secondDigit);
   console.log(operator);
-
 
   // Create the new row
   var newRow = $("<tr>").append(
