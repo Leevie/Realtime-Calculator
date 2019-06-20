@@ -7,3 +7,7 @@ td {
 #connected-viewers {
     padding: 5px;
 }
+
+h3 {
+  display: inline;
+}
