@@ -221,5 +221,8 @@ database.ref().limitToLast(10).on("child_added", function(childSnapshot) {
 
   // Append the new row to the table
   $("#calculator-table > tbody").append(newRow);
-  initializeCalculator();
+  // initializeCalculator();
+  
+  setTimeout(function(){initializeCalculator(); }, 1000);
+
 });

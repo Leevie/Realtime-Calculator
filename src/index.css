@@ -11,3 +11,7 @@ td {
 h3 {
   display: inline;
 }
+
+.jumbotron {
+  background-color: black; color: white;
+}
