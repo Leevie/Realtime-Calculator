@@ -136,8 +136,6 @@ $(".equal").on("click", function() {
   firstDigit = parseInt(firstDigit);
   secondDigit = parseInt(secondDigit);
 
-  // Based on the operator that was chosen.
-  // Then run the operation and set the HTML of the result of that operation
   if (operator === "plus") {
     total = firstDigit + secondDigit;
   } else if (operator === "minus") {
@@ -154,7 +152,6 @@ $(".equal").on("click", function() {
 });
 
 $(".clear").on("click", function() {
-  // Call initializeCalculater so we can reset the state of our app
   initializeCalculator();
 });
 
@@ -162,25 +159,29 @@ $(".clear").on("click", function() {
 
 $("#button-equal").on("click", function(event) {
   event.preventDefault();
-  // firstDigit = parseInt($("#first-number").val());
-  // secondDigit = parseInt($("#second-number").val());
   firstDigit = parseInt(firstDigit);
   secondDigit = parseInt(secondDigit);
-  // operator = $(".operator").val();
 
   
   // Switch statement for operators
-  switch($(".operator").val()) {
+  switch(operator) {
     case "plus":
       operator = "+";
       break;
     case "minus":
       operator = "-";
       break;
-        
+    case "divide":
+      operator = "%";
+      break;
+    case "times":
+      operator = "x";
+      break;
+    case "power":
+      operator = "^";
+      break;        
       }
       
-      console.log("This is the Operator: "+ operator)
 
   var newCalc = {
     firstDigit: firstDigit,
@@ -196,15 +197,9 @@ $("#button-equal").on("click", function(event) {
   console.log(newCalc.operator);
   console.log(newCalc.total);
 
-  // database.ref('/total').set({total: 15});
-
-  // $("#firstDigit").val("");
-  // $("#secondDigit").val("");
-  // $("#operator").val("");
-  // $("#total").val("");
 });
 
-database.ref().on("child_added", function(childSnapshot) {
+database.ref().limitToLast(10).on("child_added", function(childSnapshot) {
   console.log("This is childSnapshot here: " + childSnapshot.val());
 
   var firstDigit = childSnapshot.val().firstDigit;
@@ -226,4 +221,5 @@ database.ref().on("child_added", function(childSnapshot) {
 
   // Append the new row to the table
   $("#calculator-table > tbody").append(newRow);
+  initializeCalculator();
 });
